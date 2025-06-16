@@ -3,8 +3,14 @@ import { Form, Input, Button } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Fezbook from './../../../../icons/facebook.svg'
 import Google from './../../../../icons/google.svg'
+import { Loader } from "lucide-react";
+import { useLoginMutation } from "../../../../../hooks/usequery/usequeryaction";
 
 const Login: React.FC = () => {
+  const login = (e:{email:string;password:string})=>{
+    mutate(e);
+  }
+const { mutate, isPending } = useLoginMutation();
   const [form] = Form.useForm();
 
   return (
@@ -13,7 +19,7 @@ const Login: React.FC = () => {
         Enter your username and password to login.
       </h2>
 
-      <Form form={form} layout="vertical" className="space-y-3">
+      <Form onFinish={login} form={form} layout="vertical" className="space-y-3">
         <Form.Item
           name="email"
           rules={[{ required: true, message: "Email kiriting!" }]}
@@ -27,7 +33,10 @@ const Login: React.FC = () => {
 
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Parolingizni kiriting!" }]}
+            rules={[
+    { required: true, message: "Parolingizni kiriting!" },
+    { min: 6, message: "Parol kamida 6 ta belgidan iborat bo'lishi kerak!" },
+  ]}
         >
           <Input.Password
             placeholder="**********"
@@ -43,14 +52,14 @@ const Login: React.FC = () => {
           Forgot Password?
         </div>
 
-        <Form.Item>
-          <Button
+        <Form.Item >
+          <Button 
             type="primary"
             htmlType="submit"
             className="w-full bg-[#46A358] hover:bg-[#3d914a]"
             size="large"
           >
-            Login
+            {isPending ? <Loader className="animate-spin"/>:"Login"}
           </Button>
         </Form.Item>
       </Form>

@@ -66,19 +66,19 @@ const products = [
     price: 39,
     image: ten,
   },
-  {
-    id: 10,
-    name: "Chinese Evergreen",
-    price: 39,
-    image: eleven,
-  },
 ];
 
-
+  const nav_link_style = `
+  mt-[5px] text-[18px] cursor-pointer relative 
+  after:content-[''] after:absolute after:left-0 after:bottom-[-2px] 
+  after:w-0 after:h-[3px] after:bg-[#46A358] after:rounded-full
+  after:transition-all after:duration-300 
+  hover:after:w-full
+`;
 const Flowers: React.FC = () => {
   return (
     <div className="flex flex-col md:flex-row min-h-screen font-sans mt-[50px]">
-      <div className="w-full md:w-64 p-6 border-r space-y-6 bg-[#FBFBFB]">
+      <div className="w-full md:w-64 p-6 border-r mt-[20px] space-y-6 h-[131vh] bg-[#FBFBFB]">
         <div>
           <h4 className="font-bold mb-2 text-lg">Categories</h4>
           <ul className="space-y-1 text-sm text-gray-700">
@@ -96,7 +96,49 @@ const Flowers: React.FC = () => {
 
         <div>
           <h4 className="font-bold mb-2 text-lg">Price Range</h4>
-          <input type="range" min="30" max="1300" className="w-full" />
+             <style>{`
+        .range_slider {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 100%;
+          height: 8px;
+          border-radius: 4px;
+          background: green;
+          outline: none;
+        }
+        .range_slider::-webkit-slider-runnable-track {
+          // background: green;
+        }
+        .range_slider::-moz-range-track {
+          // background: green;
+        }
+        .range_slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          background: #fff;
+          border: 2px solid green;
+          border-radius: 50%;
+          cursor: pointer;
+          margin-top: -6px;
+        }
+        .range_slider::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          background: #fff;
+          border: 2px solid green;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      `}</style>
+
+      <input
+        type="range"
+        min={30}
+        max={1300}
+        className="range_slider"
+      />
           <button className="mt-2 w-full bg-green-600 text-white py-1 text-sm rounded">Filter</button>
         </div>
 
@@ -110,16 +152,16 @@ const Flowers: React.FC = () => {
         </div>
 
         <div>
-          <img src={ten} alt="Super Sale" className="rounded-lg h-[100vh]" />
+          <img src={ten} alt="Super Sale" className="rounded-lg  w-[800px]" />
         </div>
       </div>
 
-      <main className="p-2 flex-1">
+      <main className="p-8 flex-1">
         <div className="flex justify-between items-center mb-6">
           <div className="space-x-4 text-sm">
-            <button className="font-bold text-green-600">All Plants</button>
-            <button>New Arrivals</button>
-            <button>Sale</button>
+            <button className="font-bold text-green-600" >All Plants</button>
+            <button className={nav_link_style}>New Arrivals</button>
+            <button className={nav_link_style}>Sale</button>
           </div>
           <select className="border rounded px-2 py-1 text-sm">
             <option>Default sorting</option>
@@ -152,7 +194,7 @@ const Flowers: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-8 flex justify-center space-x-2">
+        <div className="mt-8 flex justify-end space-x-2">
           {[1, 2, 3, 4].map((num) => (
             <button
               key={num}

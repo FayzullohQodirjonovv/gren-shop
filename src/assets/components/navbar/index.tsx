@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import React, { useState,useEffect } from "react";
 import logo from '../../icons/grenshop.svg';
 import serach from '../../icons/search.svg';
 import shop from '../../icons/shop.svg';
@@ -6,10 +7,20 @@ import { Badge } from 'antd';
 import { BellOutlined, LoginOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../../redux/modalslice'; 
-
-const Navbar = () => {
+import type { AuthType } from '../../../@types';
+import Cookies from 'js-cookie';
+const Navbar:React.FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
+const [user, setUser] = useState<Partial<AuthType>>({});
+
+  useEffect(() => {
+    const cookie = Cookies.get("user"); 
+    if (cookie) {
+      const data: AuthType = JSON.parse(cookie);
+      setUser(data);
+    }
+  }, []);
 
   const nav_link_style = `
     text-[18px] cursor-pointer relative 
@@ -50,7 +61,7 @@ const Navbar = () => {
           hover:scale-105 hover:shadow-lg group
         ">
           <LoginOutlined className="transition-all duration-300 group-hover:translate-x-[2px]" />
-          <span className="ml-[5px] transition-all duration-300 group-hover:translate-x-[2px]">Login</span>
+          <span className="ml-[5px] transition-all duration-300 group-hover:translate-x-[2px]">{user.name ? user.name : "Login"}</span>
         </button>
       </nav>
     </header>

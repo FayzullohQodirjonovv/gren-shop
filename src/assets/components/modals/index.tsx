@@ -1,9 +1,10 @@
-import { useSelector as useReduxSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import AuthorizationModal from "./authorization";
+import type { RootState } from "../../../redux/store";
 
 const Modals = () => {
-  const { openAuthorizationModalVisiblty } = useReduxSelector(
-    (state) => state.modalSlice
+  const { openAuthorizationModalVisiblty } = useSelector(
+    (state: RootState) => state.modalSlice
   );
 
   return <>{openAuthorizationModalVisiblty && <AuthorizationModal />}</>;

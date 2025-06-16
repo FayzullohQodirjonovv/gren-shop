@@ -45,7 +45,7 @@ const Register: React.FC = () => {
             placeholder="Enter your email address"
             size="large"
             className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
-            iconRender={() => null} // ❌ ko‘zni olib tashlaydi
+            iconRender={() => null}
           />
         </Form.Item>
 
@@ -59,7 +59,7 @@ const Register: React.FC = () => {
             size="large"
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            } // ✅ Faqat bu yerda ko‘z ishlaydi
+            } 
             className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
           />
         </Form.Item>
@@ -83,7 +83,7 @@ const Register: React.FC = () => {
           <Input.Password
             placeholder="Confirm Password"
             size="large"
-            iconRender={() => null} // ❌ ko‘zni olib tashlaydi
+            iconRender={() => null} 
             className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
           />
         </Form.Item>

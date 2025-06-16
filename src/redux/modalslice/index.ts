@@ -1,4 +1,3 @@
-// src/redux/modalslice.ts
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
