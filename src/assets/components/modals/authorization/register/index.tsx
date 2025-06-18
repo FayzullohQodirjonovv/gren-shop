@@ -3,12 +3,18 @@ import { Form, Input, Button } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import Fezbook from "./../../../../icons/facebook.svg";
 import Google from "./../../../../icons/google.svg";
+import { toast } from "react-toastify";
+import { useRegisterMutation } from "../../../../../hooks/usequery/usequeryaction";
+import { Loader } from "lucide-react";
 
 const Register: React.FC = () => {
   const [form] = Form.useForm();
+  const { mutate, isPending } = useRegisterMutation();
 
-  const onFinish = (values: any) => {
-    console.log("Register values:", values);
+  const login = (values: any) => {
+    const { name, surname, email, password } = values;
+    mutate({ name, surname, email, password });
+    console.log({ name, surname, email, password });
   };
 
   return (
@@ -20,9 +26,31 @@ const Register: React.FC = () => {
       <Form
         form={form}
         layout="vertical"
-        onFinish={onFinish}
+        onFinish={login}
         className="space-y-3"
       >
+        <Form.Item
+          name="name"
+          rules={[{ required: true, message: "Ismni kiriting!" }]}
+        >
+          <Input
+            placeholder="name"
+            size="large"
+            className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="surname"
+          rules={[{ required: true, message: "Familiyangizni kiriting!" }]}
+        >
+          <Input
+            placeholder="surname"
+            size="large"
+            className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
+          />
+        </Form.Item>
+
         <Form.Item
           name="email"
           rules={[
@@ -31,21 +59,9 @@ const Register: React.FC = () => {
           ]}
         >
           <Input
-            placeholder="almamun_uxui@outlook.com"
+            placeholder="example@gmail.com"
             size="large"
             className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="Enter your email address"
-          rules={[{ required: true, message: "Parolni kiriting!" }]}
-        >
-          <Input.Password
-            placeholder="Enter your email address"
-            size="large"
-            className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
-            iconRender={() => null}
           />
         </Form.Item>
 
@@ -55,11 +71,11 @@ const Register: React.FC = () => {
           hasFeedback
         >
           <Input.Password
-            placeholder="Password"
+            placeholder="password"
             size="large"
             iconRender={(visible) =>
               visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            } 
+            }
             className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
           />
         </Form.Item>
@@ -75,15 +91,20 @@ const Register: React.FC = () => {
                 if (!value || getFieldValue("password") === value) {
                   return Promise.resolve();
                 }
+
+                toast.error("Parollar mos emas!", {
+                  position: "top-right",
+                });
+
                 return Promise.reject(new Error("Parollar mos emas!"));
               },
             }),
           ]}
         >
           <Input.Password
-            placeholder="Confirm Password"
+            placeholder="confirm password"
             size="large"
-            iconRender={() => null} 
+            iconRender={() => null}
             className="focus:!border-[#46A358] focus:!ring-[#46A358] hover:!border-[#46A358]"
           />
         </Form.Item>
@@ -95,7 +116,7 @@ const Register: React.FC = () => {
             className="w-full bg-[#46A358] hover:bg-[#3d914a]"
             size="large"
           >
-            Register
+            {isPending ? <Loader className="animate-spin" /> : "Register"}
           </Button>
         </Form.Item>
       </Form>

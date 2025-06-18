@@ -1,18 +1,22 @@
 import { useNavigate } from 'react-router-dom';
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import logo from '../../icons/grenshop.svg';
 import serach from '../../icons/search.svg';
 import shop from '../../icons/shop.svg';
 import { Badge } from 'antd';
 import { BellOutlined, LoginOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { openModal } from '../../../redux/modalslice'; 
 import type { AuthType } from '../../../@types';
 import Cookies from 'js-cookie';
-const Navbar:React.FC = () => {
-  const dispatch = useDispatch()
+import type { RootState } from '../../../redux/store';
+
+const Navbar: React.FC = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-const [user, setUser] = useState<Partial<AuthType>>({});
+  const cart = useSelector((state: RootState) => state.cart.cart); 
+
+  const [user, setUser] = useState<Partial<AuthType>>({});
 
   useEffect(() => {
     const cookie = Cookies.get("user"); 
@@ -40,7 +44,7 @@ const [user, setUser] = useState<Partial<AuthType>>({});
         <h3 onClick={() => navigate("/")} className={nav_link_style}>
           Home
         </h3>
-        <h3 onClick={() => navigate("/blog")} className={nav_link_style}>
+        <h3 onClick={() => navigate("/blok")} className={nav_link_style}>
           Blog
         </h3>
       </nav>
@@ -50,18 +54,23 @@ const [user, setUser] = useState<Partial<AuthType>>({});
 
         <BellOutlined className="hidden md:inline-block text-[22px] cursor-pointer" />
 
-        <Badge count="1">
+        <Badge onClick={() => navigate("/shop")} count={cart.length} showZero>
           <img className="cursor-pointer w-5 md:w-6" src={shop} alt="shop" />
         </Badge>
 
-        <button onClick={() => dispatch(openModal())} className="
-          hidden md:flex
-          w-[100px] h-[35px] bg-[#46A358] text-white rounded-md 
-          items-center justify-center transition-all duration-300 ease-in-out
-          hover:scale-105 hover:shadow-lg group
-        ">
+        <button
+          onClick={() => dispatch(openModal())}
+          className="
+            hidden md:flex
+            w-[100px] h-[35px] bg-[#46A358] text-white rounded-md 
+            items-center justify-center transition-all duration-300 ease-in-out
+            hover:scale-105 hover:shadow-lg group
+          "
+        >
           <LoginOutlined className="transition-all duration-300 group-hover:translate-x-[2px]" />
-          <span className="ml-[5px] transition-all duration-300 group-hover:translate-x-[2px]">{user.name ? user.name : "Login"}</span>
+          <span className="ml-[5px] transition-all duration-300 group-hover:translate-x-[2px]">
+            {user.name ? user.name : "Login"}
+          </span>
         </button>
       </nav>
     </header>

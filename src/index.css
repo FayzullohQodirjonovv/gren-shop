@@ -2,3 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Slider track (aktiv yashil chiziq) */
+.green-slider .ant-slider-track {
+  background-color: #46A358;
+}
+
+/* Slider handle (dumaloq nuqta) */
+.green-slider .ant-slider-handle {
+  border-color: #46A358;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* Hover: handle ustiga olib borilganda */
+.green-slider .ant-slider-handle:hover {
+  border-color: #46A358;
+  box-shadow: 0 0 0 5px rgba(70, 163, 88, 0.2);
+}
+
+/* Slider rail (passiv orqa fon chiziq) */
+.green-slider .ant-slider-rail {
+  background-color: #e0e0e0;
+}
+
+/* Hover: butun sliderga hover bo‘lganda track ham kuchaytiriladi */
+.green-slider:hover .ant-slider-track {
+  background-color: #3da04c; /* biroz to‘qroq green */
+}
+
+/* Hover: butun sliderga hover bo‘lganda handle ham kuchaytiriladi */
+.green-slider:hover .ant-slider-handle {
+  border-color: #3da04c;
+  box-shadow: 0 0 0 6px rgba(70, 163, 88, 0.25);
+}

@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router-dom";
 import { root } from "./roots"; 
 import "./index.css";
 import { ToastContainer } from 'react-toastify';
-
+import '@ant-design/v5-patch-for-react-19';
 createRoot(document.getElementById("root")!).render(
   <ProviderConf>
     <RouterProvider router={root} />
