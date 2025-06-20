@@ -1,4 +1,4 @@
-import React, { type FC } from 'react';
+import React, { FC } from "react";
 import {
   HeartOutlined,
   SearchOutlined,
@@ -6,8 +6,9 @@ import {
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../../../redux/cartSlice";
-import type { ProductsType } from '../../../../../@types';
+import type { SimplifiedProduct } from "../../../../../@types";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 const style_icons = `
@@ -15,17 +16,22 @@ const style_icons = `
   shadow-md hover:bg-[#46A358] hover:text-white transition
 `;
 
-const ProductCard: FC<ProductsType> = (props) => {
+const ProductCard: FC<SimplifiedProduct> = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-const handleAddToCart = () => {
-  dispatch(addToCart({ ...props, count: 1 }));
-  toast.success(`🛒 "${props.title}" savatga qo‘shildi`, {
-    position: "top-right",
-    autoClose: 2000,
-  });
-};
+  const handleAddToCart = () => {
+    dispatch(addToCart({ ...props, count: 1 }));
+    toast.success(`🛒 "${props.title}" savatga qo‘shildi`, {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
 
+  const handleViewDetails = () => {
+    localStorage.setItem("selected_product", JSON.stringify(props));
+    navigate(`/search/${props._id}`);
+  };
 
   return (
     <div className="cursor-pointer">
@@ -40,7 +46,7 @@ const handleAddToCart = () => {
             <div className={style_icons}>
               <HeartOutlined className="text-[18px]" />
             </div>
-            <div className={style_icons}>
+            <div className={style_icons} onClick={handleViewDetails}>
               <SearchOutlined className="text-[18px]" />
             </div>
             <div className={style_icons} onClick={handleAddToCart}>
@@ -52,11 +58,13 @@ const handleAddToCart = () => {
 
       <h3 className="mt-2 font-medium text-[#3D3D3D]">{props.title}</h3>
       <div className="flex items-center gap-2 mt-1">
-        <h3 className="text-[#46A358] text-[18px] font-bold">{props.price}$</h3>
-        {props.discount_price && (
-          <h3 className="font-[300] text-[#A5A5A5] line-through">
-            {props.discount_price}$
-          </h3>
+        {props.discount ? (
+          <>
+            <h3 className="text-[#46A358] text-[18px] font-bold">{props.discount_price}$</h3>
+            <h3 className="font-[300] text-[#A5A5A5] line-through">{props.price}$</h3>
+          </>
+        ) : (
+          <h3 className="text-[#46A358] text-[18px] font-bold">{props.price}$</h3>
         )}
       </div>
     </div>
