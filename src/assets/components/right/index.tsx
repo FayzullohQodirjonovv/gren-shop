@@ -7,7 +7,6 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 const PlantOffers: React.FC = () => {
   return (
     <div className="w-full max-w-[1280px] mx-auto flex flex-col md:flex-row justify-center items-center gap-6 p-6">
-      {/* Card 1 */}
       <div className="bg-white shadow-md p-3 flex flex-col md:flex-row items-center gap-4 max-w-xm">
         <img
           src={Oneimg}

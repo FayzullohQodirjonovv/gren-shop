@@ -1,24 +1,25 @@
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import ProviderConf from "./tools/provider";
-import { RouterProvider } from "react-router-dom";
-import { root } from "./roots"; 
 import "./index.css";
-import { ToastContainer } from 'react-toastify';
+import { RouterProvider } from "react-router-dom";
+import { root } from "./roots";
+import ProviderConf from "./provider";
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "react-auth-kit"; // ✅ to‘g‘ri import
 import '@ant-design/v5-patch-for-react-19';
+
 createRoot(document.getElementById("root")!).render(
-  <ProviderConf>
-    <RouterProvider router={root} />
-        <ToastContainer
-      position="top-right"
-      autoClose={3000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light"
-    />
-  </ProviderConf>
+  <StrictMode>
+    <AuthProvider
+      authType="localstorage"
+      authName="_auth"
+      cookieDomain={window.location.hostname}
+      cookieSecure={window.location.protocol === "https:"}
+    >
+      <ProviderConf>
+        <RouterProvider router={root} />
+        <Toaster />
+      </ProviderConf>
+    </AuthProvider>
+  </StrictMode>
 );

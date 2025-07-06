@@ -6,6 +6,7 @@ import { HeartOutlined } from "@ant-design/icons";
 import type { RootState } from "../../redux/store";
 import type { SimplifiedProduct } from "../../@types";
 import { addToCart } from "../../redux/cartSlice";
+import Navbar from "../../assets/components/navbar";
 
 const ProductDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,7 +43,6 @@ const ProductDetailPage = () => {
     return <div className="p-6 text-red-500">❌ Mahsulot topilmadi</div>;
   }
 
-  // 4 ta image (agar sizda bo'lmasa, bir xil rasmni 4 marta ko'rsatamiz)
   const images = [
     product.main_image,
     product.main_image,
@@ -51,19 +51,17 @@ const ProductDetailPage = () => {
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* BACK TO PRODUCTS */}
+    <div className="w-[80%] m-auto" >
+      <Navbar/>
+      <div className="p-6 max-w-7xl mx-auto">
       <div className="mb-4">
         <Link to="/" className="text-green-700 hover:underline text-sm flex items-center gap-1">
           <span>←</span> back to products
         </Link>
       </div>
 
-      {/* GRID LAYOUT */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* LEFT SIDE */}
         <div className="flex gap-4">
-          {/* Thumbnail list */}
           <div className="flex flex-col gap-3">
             {images.map((img, idx) => (
               <img
@@ -76,7 +74,6 @@ const ProductDetailPage = () => {
             ))}
           </div>
 
-          {/* Main image */}
           <div className="flex-1 flex items-center justify-center">
             <img
               src={mainImage || product.main_image}
@@ -86,7 +83,6 @@ const ProductDetailPage = () => {
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="space-y-4">
           <h1 className="text-2xl font-bold">{product.title}</h1>
           <p className="text-green-600 text-xl font-semibold">
@@ -163,6 +159,8 @@ const ProductDetailPage = () => {
         </div>
       </div>
     </div>
+      </div>
+
   );
 };
 

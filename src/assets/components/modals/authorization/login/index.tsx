@@ -1,17 +1,36 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import Fezbook from './../../../../icons/facebook.svg'
-import Google from './../../../../icons/google.svg'
+import Fezbook from './../../../../icons/facebook.svg';
+import Google from './../../../../icons/google.svg';
 import { Loader } from "lucide-react";
 import { useLoginMutation } from "../../../../../hooks/usequery/usequeryaction";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../../../../../redux/modalslice";
 
 const Login: React.FC = () => {
-  const login = (e:{email:string;password:string})=>{
-    mutate(e);
-  }
-const { mutate, isPending } = useLoginMutation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); 
+  const { mutate, isPending } = useLoginMutation();
   const [form] = Form.useForm();
+
+  const login = (e: { email: string; password: string }) => {
+    mutate(e, {
+onSuccess: (data) => {
+  if (data.token) {
+localStorage.setItem("token", data.token);
+localStorage.setItem("user", JSON.stringify(data.user));
+dispatch(closeModal());
+
+    navigate("/account");
+  }
+},
+      onError: () => {
+        message.error("Login yoki parol noto‘g‘ri!");
+      }
+    });
+  };
 
   return (
     <div className="mt-5 px-5">
@@ -33,10 +52,10 @@ const { mutate, isPending } = useLoginMutation();
 
         <Form.Item
           name="password"
-            rules={[
-    { required: true, message: "Parolingizni kiriting!" },
-    { min: 6, message: "Parol kamida 6 ta belgidan iborat bo'lishi kerak!" },
-  ]}
+          rules={[
+            { required: true, message: "Parolingizni kiriting!" },
+            { min: 6, message: "Parol kamida 6 ta belgidan iborat bo'lishi kerak!" },
+          ]}
         >
           <Input.Password
             placeholder="**********"
@@ -52,14 +71,14 @@ const { mutate, isPending } = useLoginMutation();
           Forgot Password?
         </div>
 
-        <Form.Item >
-          <Button 
+        <Form.Item>
+          <Button
             type="primary"
             htmlType="submit"
             className="w-full bg-[#46A358] hover:bg-[#3d914a]"
             size="large"
           >
-            {isPending ? <Loader className="animate-spin"/>:"Login"}
+            {isPending ? <Loader className="animate-spin" /> : "Login"}
           </Button>
         </Form.Item>
       </Form>

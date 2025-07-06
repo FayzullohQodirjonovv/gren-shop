@@ -10,7 +10,6 @@ import { openModal } from '../../../redux/modalslice';
 import type { AuthType } from '../../../@types';
 import Cookies from 'js-cookie';
 import type { RootState } from '../../../redux/store';
-
 const Navbar: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,7 +24,6 @@ const Navbar: React.FC = () => {
       setUser(data);
     }
   }, []);
-
   const nav_link_style = `
     text-[18px] cursor-pointer relative 
     after:content-[''] after:absolute after:left-0 after:bottom-0 
@@ -33,7 +31,6 @@ const Navbar: React.FC = () => {
     after:transition-all after:duration-300 
     hover:after:w-full
   `;
-
   return (
     <header className="flex flex-wrap items-center justify-between py-5 px-4">
       <nav onClick={() => navigate("/")} className="cursor-pointer">
@@ -57,21 +54,28 @@ const Navbar: React.FC = () => {
         <Badge onClick={() => navigate("/shop")} count={cart.length} showZero>
           <img className="cursor-pointer w-5 md:w-6" src={shop} alt="shop" />
         </Badge>
+  <button
+  onClick={() => {
+    const cookie = Cookies.get("user");
 
-        <button
-          onClick={() => dispatch(openModal())}
-          className="
-            hidden md:flex
-            w-[100px] h-[35px] bg-[#46A358] text-white rounded-md 
-            items-center justify-center transition-all duration-300 ease-in-out
-            hover:scale-105 hover:shadow-lg group
-          "
-        >
-          <LoginOutlined className="transition-all duration-300 group-hover:translate-x-[2px]" />
-          <span className="ml-[5px] transition-all duration-300 group-hover:translate-x-[2px]">
-            {user.name ? user.name : "Login"}
-          </span>
-        </button>
+    if (cookie) {
+      navigate("/account");
+    } else {
+      dispatch(openModal());
+    }
+  }}
+  className="w-[100px] h-[35px] bg-[#46a358] text-white rounded-md flex items-center justify-center gap-2"
+>
+  {user.name ? (
+    user.name
+  ) : (
+    <>
+      <LoginOutlined />
+      Login
+    </>
+  )}
+</button>
+
       </nav>
     </header>
   );

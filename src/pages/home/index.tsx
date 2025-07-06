@@ -5,6 +5,7 @@ import Flowers from "../../assets/components/flowers"
 import Right from "../../assets/components/right"
 import Left from "../../assets/components/left"
 import Footer from "../../assets/components/footer"
+import Userdropdown from "../../assets/components/UserDropdown/index"
 const Home = () => {
   return (
     <div className="w-[90%] m-auto">
@@ -15,6 +16,7 @@ const Home = () => {
       <Right/>
       <Left/>
       <Footer/>
+      <Userdropdown/>
     </div>
   )
 }
