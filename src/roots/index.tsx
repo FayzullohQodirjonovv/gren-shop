@@ -11,6 +11,7 @@ import Wishlist from "../pages/wishlist";
 import Adress from "../pages/adress";
 import Track from "../pages/track";
 import Procuct from "../pages/myproduct";
+import Detals from "../assets/components/detals/index";
 
 export const root = createBrowserRouter([
   {
@@ -61,5 +62,9 @@ export const root = createBrowserRouter([
 {
   path: "/Procuct",
   element: <Procuct />,
+},
+{
+  path: "/detals/:id",
+  element: <Detals />,
 },
 ]);

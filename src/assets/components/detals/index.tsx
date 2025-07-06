@@ -1,9 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { Skeleton, Avatar, Tooltip } from "antd";
-import { useAddFollow, useRemoveFollow } from "../../../hooks/tops/useuseraction";
-import { type FC } from "react";
-import { useAuthUser } from "react-auth-kit";
+import { Skeleton } from "antd";
 import { useSingleUser } from "../../../hooks/tops/useSingleUser/useSingleUser";
+import { useEffect, type FC } from "react";
+import { useAuth } from "../compoens/index";
+
+interface User {
+  _id: string;
+  name: string;
+  surname: string;
+  profile_photo?: string;
+  followers?: string[];
+  followings?: string[];
+}
 
 interface CommentNavbarProps {
   authorId: string;
@@ -11,14 +19,15 @@ interface CommentNavbarProps {
 
 const CommentNavbar: FC<CommentNavbarProps> = ({ authorId }) => {
   const { data, isLoading } = useSingleUser(authorId);
-  const navigate = useNavigate();
-  const loggedInUser = useAuthUser()();
 
-  const { mutate: followUser } = useAddFollow();
-  const { mutate: unfollowUser } = useRemoveFollow();
+  useEffect(() => {
+    console.log("Fetched user data:", data);
+  }, [data]);
+
+  const navigate = useNavigate();
+  const { user: loggedInUser } = useAuth() as { user: User | null };
 
   const isCurrentUser = loggedInUser?._id === authorId;
-  const isFollowing = loggedInUser?.followers?.includes(authorId);
 
   if (isLoading || !data) {
     return (
@@ -33,20 +42,12 @@ const CommentNavbar: FC<CommentNavbarProps> = ({ authorId }) => {
     <div className="flex items-center justify-between py-4">
       <div
         className="flex items-center gap-3 cursor-pointer"
-        onClick={() => navigate(`/detals/${authorId}`)}
+        onClick={() => navigate(`/user/${data._id}`)}
       >
-        <Tooltip title={`${data.name} ${data.surname}`}>
-          <Avatar
-            src={data.profile_photo}
-            size={45}
-            alt="User"
-            style={{ objectFit: "cover" }}
-          >
-            {/* Agar rasm bo'lmasa: */}
-            {data.name?.[0]}
-          </Avatar>
-        </Tooltip>
-
+        <img
+          src={data.profile_photo || "/default-user.png"}
+          className="w-[45px] h-[45px] rounded-full object-cover"
+        />
         <div>
           <h3 className="font-semibold text-[16px]">
             {data.name} {data.surname}
@@ -59,18 +60,13 @@ const CommentNavbar: FC<CommentNavbarProps> = ({ authorId }) => {
 
       <div>
         {isCurrentUser ? (
-          <button className="bg-[#46A358] text-white px-4 py-1 rounded-md">You</button>
-        ) : isFollowing ? (
-          <button
-            onClick={() => unfollowUser({ id: authorId })}
-            className="bg-red-500 text-white px-4 py-1 rounded-md"
-          >
-            Unfollow
+          <button className="bg-[#46A358] text-white px-4 py-1 rounded-md" disabled>
+            You
           </button>
         ) : (
           <button
-            onClick={() => followUser({ id: authorId })}
             className="bg-[#46A358] text-white px-4 py-1 rounded-md"
+            onClick={() => alert("Follow clicked!")}
           >
             Follow
           </button>

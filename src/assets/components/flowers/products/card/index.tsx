@@ -41,7 +41,6 @@ const ProductCard: FC<SimplifiedProduct> = (props) => {
   
     let updatedItems;
     if (!exists) {
-      // Yangi mahsulotni wishlistga qo‘shish
       updatedItems = [...savedItems, props];
       toast.success("Saqlandi", {
         position: "top-center",
