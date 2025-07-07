@@ -96,16 +96,25 @@ export interface SessionUser {
   profile_photo: string;
   followers?: string[];
   following?: string[];
-  bio?:string,
+  bio?: string;
+  username?: string;
+  role?: string;
+  created_at?: string;
+  wishlist?: any[];
+  products?: any[];
+  posts?: any[];
+  likes?: any[];
+  main_image:string
 }
+
 export interface BlogType {
-  _id: string;              // Blog ID
-  title: string;            // Blog sarlavhasi
-  content: string;          // Blog HTML kontenti
-  image: string;            // Blog rasmi (path)
-  viewCount: number;        // Ko‘rishlar soni
-  commentCount: number;     // Izohlar soni
-  likeCount: number;        // Layklar soni
-  createdBy: string;        // Muallif ID si
+  _id: string;      
+  title: string;         
+  content: string;         
+  image: string;            
+  viewCount: number;        
+  commentCount: number;     
+  likeCount: number;       
+  createdBy: string;       
 }
 

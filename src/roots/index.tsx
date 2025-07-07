@@ -66,5 +66,5 @@ export const root = createBrowserRouter([
 {
   path: "/detals/:id",
   element: <Detals />,
-},
+}
 ]);

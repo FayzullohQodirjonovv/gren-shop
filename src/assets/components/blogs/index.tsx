@@ -42,7 +42,6 @@ const CommentNavbar: FC<CommentNavbarProps> = ({ authorId }) => {
             alt="User"
             style={{ objectFit: "cover" }}
           >
-            {/* Agar rasm bo'lmasa: */}
             {data.name?.[0]}
           </Avatar>
         </Tooltip>

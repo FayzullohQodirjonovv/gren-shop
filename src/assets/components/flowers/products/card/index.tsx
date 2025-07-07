@@ -47,7 +47,6 @@ const ProductCard: FC<SimplifiedProduct> = (props) => {
         autoClose: 1500,
       });
     } else {
-      // Wishlistdan olib tashlash
       updatedItems = savedItems.filter((item: SimplifiedProduct) => item._id !== props._id);
       toast.error("Saqlashdan olib tashlandi", {
         position: "top-center",
